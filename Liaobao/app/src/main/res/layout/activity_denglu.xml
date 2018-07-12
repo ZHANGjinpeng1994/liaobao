@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="#EFEFEF"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/buttonOneLinearlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/input_xian"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                     >
+
+                    <EditText
+                        android:id="@+id/usernameEditView"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:drawablePadding="10dp"
+                        android:hint="请输入用户名"
+                        android:maxLength="11"
+                        android:inputType="number"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:background="@null"
+                        android:textSize="13sp" >
+                    </EditText>
+
+                    <ImageView
+                        android:id="@+id/phoneImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="-40dp"
+                        android:layout_toRightOf="@+id/usernameEditView"
+                        android:visibility="gone"
+                         />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/buttonLinearlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/input_xian"
+                    android:layout_margin="10dp" >
+
+                    <EditText
+                        android:id="@+id/passEditView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:drawablePadding="13dp"
+                        android:maxLength="20"
+                        android:hint="请输入密码"
+                        android:inputType="textPassword"
+                        android:background="@null"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:id="@+id/passwordImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="-40dp"
+                        android:layout_toRightOf="@+id/passEditView"
+                        android:visibility="gone" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/anniuRelativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/zhuceTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:textColor="?attr/colorAccent" />
+                    <CheckBox
+                        android:id="@+id/jizhu_CB"
+                        android:layout_marginRight="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="visible"
+                        android:textSize="12sp"
+                        android:text="记住密码"/>
+                    <TextView
+                        android:id="@+id/wangjiTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:textColor="#333333"
+                        android:visibility="gone" />
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/denglu_TV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="0"
+            android:padding="10dp"
+            android:text="登录"
+            android:background="@drawable/btn_mystyle"
+            android:textColor="#fff" />
+        <!--android:background="?attr/colorAccent"-->
+    </LinearLayout>
+
+    <include
+        android:id="@+id/title_bars"
+        layout="@layout/titler" />
+</FrameLayout>

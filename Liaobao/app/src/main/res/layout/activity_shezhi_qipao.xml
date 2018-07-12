@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFEFEF"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+   >
+    <include
+        android:id="@+id/title_bars"
+        layout="@layout/titler" />
+
+            <com.liaobao.view.copyipad
+                android:id="@+id/copyipad1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+            </com.liaobao.view.copyipad>
+</LinearLayout>

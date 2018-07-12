@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#f1b6ae</color>
+
+
+    <color name="hui_date">#999999</color>
+    <color name="item_back_press">#F5F5F5</color>
+
+    <!-- alertdialog -->
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+    <color name="text_press">#ABFEFF</color>
+    <color name="text_press2">#CCCCCC</color>
+    <color name="black_p50">#7f000000</color>
+    <color name="province_line_border">#999999</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!--透明-->
+    <color name="transparent">#00000000</color>
+    <color name="common_title_bg">#f1b6ae</color>
+    <color name="liaobao_send_bg">#b2dbcd</color>
+    <color name="liaobao_receive_bg">#f1b6ae</color>
+
+    <!--最受欢迎扁平化UI设计配色方案集-->
+    <!--http://flatuicolors.com/-->
+    <!--************配色方案1 start***********-->
+    <color name="bai_color1">#f2eae7</color>
+    <color name="fen_color1">#f1b6ae</color>
+    <color name="zong_color1">#8a7f7d</color>
+    <color name="lv_color1">#b2dbcd</color>
+    <!--************配色方案1 end***********-->
+
+    <!--************配色方案2 start***********-->
+    <color name="shenlan_color2">#0092c7</color>
+    <color name="lan_color2">#9fe0f6</color>
+    <color name="huang_color2">#f3e597</color>
+    <color name="ju_color2">#f3b59b</color>
+    <color name="fen_color2">#f29c9c</color>
+    <!--************配色方案2 end***********-->
+
+    <!--************配色方案3 start***********-->
+    <color name="fen_color3">#f3456d</color>
+    <color name="huang_color3">#f4d954</color>
+    <color name="bai_color3">#f4eede</color>
+    <color name="cheng_color3">#f49930</color>
+    <color name="ju_color3">#f26d26</color>
+    <!--************配色方案3 end***********-->
+
+    <!--************配色方案4 start***********-->
+    <color name="mo_color4">#7ba3a8</color>
+    <color name="bai_color4">#f4f3de</color>
+    <color name="hui_color4">#bead92</color>
+    <color name="hong_color4">#f35a4a</color>
+    <color name="hei_color4">#5b4947</color>
+    <!--************配色方案4 end***********-->
+
+    <!--************配色方案5 start***********-->
+    <color name="hei_color5">#030526</color>
+    <color name="mo_color5">#0b2359</color>
+    <color name="hui_color5">#46718c</color>
+    <color name="bai_color5">#eef2d0</color>
+    <color name="hong_color5">#d98179</color>
+    <!--************配色方案5 end***********-->
+</resources>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFEFEF"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.liaobao.UI.Guanyu.GuanyuActivity">
+    <include
+        android:id="@+id/title_bars"
+        layout="@layout/titler" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/guanju_banben_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="版本号1.0"
+            android:drawablePadding="10dp"
+            android:drawableTop="@mipmap/logo"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/banben_LL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:layout_marginBottom="5dp"
+            android:visibility="gone"
+            >
+            <TextView android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="版本更新"
+                android:layout_weight="1"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/banben_TV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="已是最新版"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/gongsi_LL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            style="@style/shezhi_text"
+            android:layout_marginBottom="5dp"
+            >
+            <TextView android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="作者"
+                android:layout_weight="1"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/gongsi_TV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="right"
+                android:text="张金鹏"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/wangzhan_LL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            style="@style/shezhi_text"
+            android:padding="10dp"
+            >
+            <TextView android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="CSDN"
+                android:layout_weight="1"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/wangzhan_TV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="right"
+                android:autoLink="web"
+                android:autoText="true"
+                android:text="http://blog.csdn.net/yuexiaduzhe"/>
+        </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
+            android:text="聊宝"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/xiangqing_guanyu_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25dp"
+            android:text="©2017 zhangjinpeng,All Rights Reserved"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+</LinearLayout>
