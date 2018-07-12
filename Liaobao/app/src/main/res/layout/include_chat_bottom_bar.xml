@@ -11,6 +11,7 @@
     android:paddingRight="5dp"
     android:minHeight="50dp"
     android:gravity="center_vertical"
+    android:background="#F5F6F7"
     android:orientation="horizontal">
 
     <Button

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -28,15 +29,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.iosdialog.view.ActionSheetBottomDialog;
 import com.liaobao.Base.AppBaseActivity;
 import com.liaobao.Base.MYBaseActivity;
 import com.liaobao.R;
+import com.liaobao.UI.LiaotianActivity;
+import com.liaobao.UI.MainActivity;
 import com.liaobao.Util.DateTools;
 import com.liaobao.Util.LogUtil;
 import com.liaobao.Util.StringUtil;
 import com.liaobao.adapter.LiaotianAdpter;
 import com.liaobao.config.APP;
 import com.liaobao.entity.Msg;
+import com.liaobao.photoview.Use.PhotoViewActivity;
+import com.liaobao.speech.SpeechRecognizerUtil;
+import com.liaobao.speech.SpeechSynthesizerUtil;
 import com.liaobao.view.TitleBarUI;
 
 import java.util.ArrayList;
@@ -68,7 +75,8 @@ import cn.bmob.v3.exception.BmobException;
  * @project:ChatActivity
  * @date :2016-01-25-18:23
  */
-public class ChatActivity extends AppBaseActivity implements ObseverListener,MessageListHandler {
+public class ChatActivity extends AppBaseActivity implements ObseverListener,MessageListHandler,
+        LiaotianAdpter.OnClickMsgListener,SpeechRecognizerUtil.RecoListener{
 
     private TitleBarUI title_bar;
     LinearLayout ll_chat;
@@ -95,10 +103,18 @@ public class ChatActivity extends AppBaseActivity implements ObseverListener,Mes
 
     LiaotianAdpter adapter;
     BmobIMConversation c;
-    List<Msg> list=new ArrayList<>();
+    // 语音听写工具
+    private SpeechRecognizerUtil speechRecognizerUtil;
+    // 语音合成工具
+    private SpeechSynthesizerUtil speechSynthesizerUtil;
+    private List<Msg> list=new ArrayList<>();
 
     private String myuid;
-
+    private void initSpeech() {
+        speechRecognizerUtil = new SpeechRecognizerUtil(this);
+        speechRecognizerUtil.setRecoListener(this);
+        speechSynthesizerUtil = new SpeechSynthesizerUtil(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +125,7 @@ public class ChatActivity extends AppBaseActivity implements ObseverListener,Mes
         initSwipeLayout();
         initVoiceView();
         initBottomView();
+        initSpeech();
     } private void iniTitle() {
         title_bar= (TitleBarUI) findViewById(R.id.title_bar);
         title_bar.setZhongjianText("小伙伴");
@@ -140,6 +157,8 @@ public class ChatActivity extends AppBaseActivity implements ObseverListener,Mes
         btn_chat_keyboard.setOnClickListener(this);
         btn_chat_send.setOnClickListener(this);
         findViewById(R.id.btn_chat_add).setOnClickListener(this);
+        findViewById(R.id.btn_chat_emo).setOnClickListener(this);
+        findViewById(R.id.edit_msg).setOnClickListener(this);
     }
 
     private void initview() {
@@ -161,7 +180,7 @@ public class ChatActivity extends AppBaseActivity implements ObseverListener,Mes
 
     private void initSwipeLayout(){
         sw_refresh.setEnabled(true);
-        adapter = new LiaotianAdpter(this,list);
+        adapter = new LiaotianAdpter(this,list,this);
         rc_view.setAdapter(adapter);
         ll_chat.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -193,12 +212,10 @@ public class ChatActivity extends AppBaseActivity implements ObseverListener,Mes
             }
         });
         edit_msg.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 scrollToBottom();
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(s)) {
@@ -213,7 +230,6 @@ public class ChatActivity extends AppBaseActivity implements ObseverListener,Mes
                     }
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
             }
@@ -280,65 +296,92 @@ public class ChatActivity extends AppBaseActivity implements ObseverListener,Mes
         });
     }
 
-    /**
-     * 长按说话
-     * @author smile
-     * @date 2014-7-1 下午6:10:16
-     */
-    class VoiceTouchListener implements View.OnTouchListener {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            switch (event.getAction()) {
-//                case MotionEvent.ACTION_DOWN:
-//                    if (!Util.checkSdCard()) {
-//                         ST.show("发送语音需要sdcard支持！");
-//                        return false;
-//                    }
-//                    try {
-//                        v.setPressed(true);
-//                        layout_record.setVisibility(View.VISIBLE);
-//                        tv_voice_tips.setText(getString(R.string.voice_cancel_tips));
-//                        // 开始录音
-//                        recordManager.startRecording(c.getConversationId());
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                    return true;
-//                case MotionEvent.ACTION_MOVE: {
-//                    if (event.getY() < 0) {
-//                        tv_voice_tips.setText(getString(R.string.voice_cancel_tips));
-//                        tv_voice_tips.setTextColor(Color.RED);
-//                    } else {
-//                        tv_voice_tips.setText(getString(R.string.voice_up_tips));
-//                        tv_voice_tips.setTextColor(Color.WHITE);
-//                    }
-//                    return true;
-//                }
-                case MotionEvent.ACTION_UP:
-                    v.setPressed(false);
-                    layout_record.setVisibility(View.INVISIBLE);
-                    try {
-                        if (event.getY() < 0) {// 放弃录音
-                            recordManager.cancelRecording();
-                        } else {
-                            int recordTime = recordManager.stopRecording();
-                            if (recordTime > 1) {
-                                // 发送语音文件
-                                sendVoiceMessage(recordManager.getRecordFilePath(c.getConversationId()),recordTime);
-                            } else {// 录音时间过短，则提示录音过短的提示
-                                layout_record.setVisibility(View.GONE);
-//                                showShortToast().show();
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    return true;
-                default:
-                    return false;
-            }
+    @Override
+    public void click(int position) {//点击
+        Msg msg = list.get(position);
+        switch (msg.getType()) {
+            case APP.MSG_TYPE_TEXT://文本
+                break;
+            case APP.MSG_TYPE_IMG://图片
+                Intent intent=new Intent(ChatActivity.this, PhotoViewActivity.class);
+                intent.putExtra("urls",new String[]{msg.getContent()});
+                startActivity(intent);
+                break;
+            case APP.MSG_TYPE_VOICE://语音
+                break;
         }
     }
+
+    @Override
+    public void longClick(int position) {//长按
+        Msg msg = list.get(position);
+        switch (msg.getType()) {
+            case APP.MSG_TYPE_TEXT://文本
+                clip(msg, position);
+                break;
+            case APP.MSG_TYPE_IMG://图片
+                delect(msg,position);
+                break;
+            case APP.MSG_TYPE_VOICE://语音
+//                delonly(msg, position);
+                delect(msg,position);
+                break;
+        }
+    }
+    /**
+     * 带复制文本的操作
+     */
+    void clip(final Msg msg, final int position) {
+        new ActionSheetBottomDialog(this)
+                .builder()
+                .addSheetItem("复制", ActionSheetBottomDialog.SheetItemColor.Blue, new ActionSheetBottomDialog.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(int which) {
+                        ClipboardManager cmb = (ClipboardManager) ChatActivity.this.getSystemService(LiaotianActivity.CLIPBOARD_SERVICE);
+                        cmb.setText(msg.getContent());
+//                        ToastUtil.showToast(ChatActivity.this, "已复制到剪切板");
+                    }
+                })
+                .addSheetItem("朗读", ActionSheetBottomDialog.SheetItemColor.Blue, new ActionSheetBottomDialog.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(int which) {
+                        speechSynthesizerUtil.speech(msg.getContent());
+                    }
+                })
+                .addSheetItem("删除", ActionSheetBottomDialog.SheetItemColor.Blue, new ActionSheetBottomDialog.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(int which) {
+                        BmobIMMessage message=new BmobIMMessage();
+                        message.setId(Long.parseLong(msg.getBak1()));
+                        c.deleteMessage(message);
+                        list.remove(position);
+                        adapter.notifyDataSetChanged();
+                    }
+                })
+                .show();
+    }
+    private void delect(final Msg msg, final int position) {
+        new ActionSheetBottomDialog(this)
+                .builder()
+                .addSheetItem("删除", ActionSheetBottomDialog.SheetItemColor.Blue, new ActionSheetBottomDialog.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(int which) {
+                        BmobIMMessage message=new BmobIMMessage();
+                        message.setId(Long.parseLong(msg.getBak1()));
+                        c.deleteMessage(message);
+                        list.remove(position);
+                        adapter.notifyDataSetChanged();
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    public void recoComplete(String text) {
+        LogUtil.e("=="+text);
+        edit_msg.setText(""+text);
+    }
+
 
     /**
      * 根据是否点击笑脸来显示文本输入框的状态
@@ -397,7 +440,7 @@ public class ChatActivity extends AppBaseActivity implements ObseverListener,Mes
      */
     public void sendRemoteImageMessage(){
         BmobIMImageMessage image =new BmobIMImageMessage();
-        image.setRemoteUrl("http://img.lakalaec.com/ad/57ab6dc2-43f2-4087-81e2-b5ab5681642d.jpg");
+        image.setRemoteUrl("http://tx.haiqq.com/uploads/allimg/150405/031R31a3-11.jpg");
         c.sendMessage(image, listener);
     }
 
@@ -472,11 +515,11 @@ public class ChatActivity extends AppBaseActivity implements ObseverListener,Mes
                 msgs=getChatInfoTo(msg,APP.MSG_TYPE_IMG);
                 BmobIMImageMessage message = BmobIMImageMessage.buildFromDB(false,msg);
                 msgs.setContent(message.getRemoteUrl());
-
             }else{
                 msgs = getChatInfoTo(msg, APP.MSG_TYPE_TEXT);
             }
             msgs.isanim_start=1;
+            msgs.setBak1(msg.getId()+"");
             adapter.add(msgs);
             edit_msg.setText("");
             scrollToBottom();
@@ -528,6 +571,7 @@ public class ChatActivity extends AppBaseActivity implements ObseverListener,Mes
                                 msgs = getChatInfoTo(s, APP.MSG_TYPE_TEXT);
 
                             }
+                            msgs.setBak1(s.getId()+"");
                             msgs.isanim_start=1;
                             adapter.add(msgs);
                         }
@@ -568,6 +612,7 @@ public class ChatActivity extends AppBaseActivity implements ObseverListener,Mes
                 msgs = getChatInfoTo(msg, APP.MSG_TYPE_TEXT);
             }
             msgs.isanim_start=1;
+            msgs.setBak1(msg.getId()+"");
             adapter.add(msgs);
 //            if(adapter.findPosition(msg)<0){//如果未添加到界面中
 //                adapter.addMessage(msg);
@@ -681,9 +726,10 @@ public class ChatActivity extends AppBaseActivity implements ObseverListener,Mes
 //                        layout_more.setVisibility(View.GONE);
 //                    }
 //                }
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 1);
+                sendRemoteImageMessage();
+//                Intent intent = new Intent(Intent.ACTION_PICK,
+//                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(intent, 1);
                 break;
             case R.id.btn_chat_voice:
                 edit_msg.setVisibility(View.GONE);

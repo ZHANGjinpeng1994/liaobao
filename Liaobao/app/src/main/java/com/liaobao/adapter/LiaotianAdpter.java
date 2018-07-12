@@ -137,7 +137,6 @@ public class LiaotianAdpter extends BaseListAdapter<Msg> {
                 tv_text.setOnLongClickListener(new onLongCilck(position));
                 break;
             case APP.MSG_TYPE_IMG://图片
-                LogUtil.e("=====dddddddddddddssssss===="+msg.getContent());
                 finalImageLoader.display(iv_image, msg.getContent());
                 iv_image.setOnClickListener(new onClick(position));
                 iv_image.setOnLongClickListener(new onLongCilck(position));
