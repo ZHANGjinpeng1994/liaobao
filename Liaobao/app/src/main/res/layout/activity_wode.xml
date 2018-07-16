@@ -17,7 +17,7 @@
         android:src="@mipmap/jiqi"
         android:layout_gravity="center"
         app:border_width="5dp"
-        app:border_color="@color/bai_color1"
+        app:border_color="@color/hei_color5"
         />
     <TextView
         android:id="@+id/textView"
@@ -29,6 +29,7 @@
         android:textStyle="bold"
         android:text="名称" />
     <LinearLayout
+        android:id="@+id/shengri_LL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -43,6 +44,16 @@
             android:textSize="15sp"
             android:textColor="@color/bai_color1"
             android:text="生日"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|right"
+            android:drawableRight="@drawable/youjiantou"
+            android:textSize="15sp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/bai_color1"
+            android:drawablePadding="10dp"
+            android:text="20120103"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,12 +63,23 @@
         android:paddingLeft="20dp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
+        android:orientation="horizontal"
         android:background="@color/colorAccent">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:textColor="@color/bai_color1"
-            android:text="生日"/>
+            android:text="性别"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|right"
+            android:drawableRight="@drawable/youjiantou"
+            android:textSize="15sp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/bai_color1"
+            android:drawablePadding="10dp"
+            android:text="男"/>
     </LinearLayout>
 </LinearLayout>
