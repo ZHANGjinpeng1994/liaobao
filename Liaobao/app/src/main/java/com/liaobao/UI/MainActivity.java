@@ -31,6 +31,7 @@ import com.iosdialog.view.ActionSheetBottomDialog;
 import com.liaobao.Base.AppBaseActivity;
 import com.liaobao.R;
 import com.liaobao.UI.Guanyu.GuanyuActivity;
+import com.liaobao.UI.Wode.Wode_Activity;
 import com.liaobao.UI.Wode.denglu_Activity;
 import com.liaobao.UI.Xiaohuoban.HuobanActivity;
 import com.liaobao.UI.shezhi.ShezhiActivity;
@@ -45,6 +46,7 @@ import com.liaobao.entity.Msg;
 import com.liaobao.photoview.Use.PhotoViewActivity;
 import com.liaobao.speech.SpeechRecognizerUtil;
 import com.liaobao.speech.SpeechSynthesizerUtil;
+import com.liaobao.view.CircleImageView;
 import com.liaobao.view.DropdownListView;
 
 import net.tsz.afinal.FinalHttp;
@@ -143,6 +145,7 @@ public class MainActivity extends AppBaseActivity
                 return false;
             }
         });
+
     }
     private void initSpeech() {
         speechRecognizerUtil = new SpeechRecognizerUtil(this);
@@ -172,6 +175,11 @@ public class MainActivity extends AppBaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+        View view=navigationView.getHeaderView(0);
+        if(view!=null&& view.findViewById(R.id.head_view)!=null){
+            view.findViewById(R.id.head_view).setOnClickListener(this);
+        }
+
     }
     /**
      * 带复制文本的操作
@@ -297,6 +305,9 @@ public class MainActivity extends AppBaseActivity
                         speechRecognizerUtil.say(input, true);
 //                }
                 }
+                break;
+            case R.id.head_view:
+                startActivity(new Intent(MainActivity.this,Wode_Activity.class));
                 break;
         }
     }
@@ -456,7 +467,7 @@ public class MainActivity extends AppBaseActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        LogUtil.e("=item.getItemId()="+item.getItemId());
         if (id == R.id.nav_camera) {
             startActivity(new Intent(MainActivity.this,ShezhiActivity.class));
         } else if (id == R.id.nav_guanyu) {
@@ -472,6 +483,7 @@ public class MainActivity extends AppBaseActivity
 //        } else if (id == R.id.nav_send) {
 
         }
+//        startActivity(new Intent(MainActivity.this,Wode_Activity.class));
 
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        drawer.closeDrawer(GravityCompat.START);

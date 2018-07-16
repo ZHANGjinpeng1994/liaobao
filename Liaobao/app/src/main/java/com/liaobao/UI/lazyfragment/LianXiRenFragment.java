@@ -31,6 +31,8 @@ import java.util.List;
 import cn.bmob.newim.BmobIM;
 import cn.bmob.newim.bean.BmobIMConversation;
 import cn.bmob.newim.bean.BmobIMUserInfo;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -199,7 +201,6 @@ public class LianXiRenFragment extends BaseFragment {
                             adapter.notifyDataSetChanged();
                             sw_refresh.setRefreshing(false);
                         } else {
-
                             adapter.bindDatas(null);
                             adapter.notifyDataSetChanged();
                             sw_refresh.setRefreshing(false);
@@ -208,4 +209,5 @@ public class LianXiRenFragment extends BaseFragment {
                 }
         );
     }
+
 }

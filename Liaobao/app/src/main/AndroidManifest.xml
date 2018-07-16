@@ -96,11 +96,15 @@
             android:name=".UI.Xiaohuoban.HuobanActivity"
             android:theme="@style/AppTheme.Transparent" />
         <activity android:name=".UI.Xiaohuoban.ChatActivity" />
-        <activity android:name=".UI.shezhi.LiaotianjiluActivity"></activity>
+        <activity android:name=".UI.shezhi.LiaotianjiluActivity"/>
 
         <activity
             android:name=".UI.lazyfragment.LiaotianActivity"
              />
+        <activity
+            android:name=".UI.Wode.Wode_Activity"
+            android:theme="@style/AppTheme.Transparent"
+            />
     </application>
 
 </manifest>
